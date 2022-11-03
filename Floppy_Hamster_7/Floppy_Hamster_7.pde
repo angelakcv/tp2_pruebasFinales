@@ -1,9 +1,12 @@
 import processing.sound.*;
 SoundFile inicio, ambiente, punto, perdiste, ganaste, ouch, pop, boing;
 import fisica.*;
+import spout.*;
 
 //fisica
 FWorld mundo;
+
+Spout spout;
 
 //Fuente
 PFont texto;
@@ -68,8 +71,10 @@ Plataforma base1, base2, base3, base4, base6, base7, base8, base11, boton;
 Plat_Circular baseC1, baseC2, baseC3;
 
 void setup() {
-  size(1600, 900);
-  //semillas = new ArrayList <Semilla> ();
+  size(1550, 900,P3D);
+  
+  spout = new Spout(this);
+  spout.createSender("Prueba");
 
   texto= createFont ("Sketchtica.ttf", 30);
   textoT = createFont ("KGSummerSunshine.ttf", 135);
@@ -139,10 +144,7 @@ void setup() {
   boxPunete = loadImage("boxpuñete.PNG");
   botonReiniciar = loadImage("botonReinicio.png");
 
-  //for (int i = 0; i <3; i++) {
-  //  Semilla s = new Semilla();
-  //  semillas.add(s);
-  //}
+ 
   //Iniciar juego
   estado = "Inicio";
   inicio.loop();
@@ -226,6 +228,7 @@ void draw() {
     estado = "Perdiste";
     reciclarVar();
   }
+  spout.sendTexture();
 }
 
 /////////////////////////////PASAJE DE ESTADOS/////////////////////////////
@@ -295,13 +298,13 @@ void iniciarJuego() {
   //-----------------------------------------------------------
   //Pinchos del lado derecho
   Bordes pinchosder = new Bordes(30, 800);
-  pinchosder.inicializar(20, 400);
+  pinchosder.inicializar(50, 400);
   pinchosder.attachImage(PinchosIzq);
   mundo.add(pinchosder);
 
   //Pinchos del lado Izquierdo
   Bordes pinchosizq = new Bordes(30, 800);
-  pinchosizq.inicializar(1580, 400);
+  pinchosizq.inicializar(1530, 400);
   pinchosizq.attachImage(PinchosDer);
   mundo.add(pinchosizq);
 
@@ -1157,7 +1160,7 @@ boolean getTermino() {
 }
 
 void reciclarVar() {
-  time = duracion = 50;
+  time = duracion = 500;
   begin=millis();
   termino=false;
 }
